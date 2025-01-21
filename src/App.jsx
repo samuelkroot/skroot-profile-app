@@ -5,8 +5,6 @@ import Card1 from './components/Card1';
 import Navbar from './components/Navbar';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
       <header>
@@ -14,18 +12,18 @@ function App() {
       </header>
       <main>
         <div className="section">
-          <div className='container'>
+          <div className="container">
             <h1>Profile App</h1>
           </div>
         </div>
         <div className="section">
-          <div className='container'>
+          <div className="container">
             <About />
           </div>
         </div>
         <div className="section">
-          <div className='container'>
-            <div className='profile-cards'>
+          <div className="container">
+            <div className="profile-cards">
               <Card0 />
               <Card1 />
             </div>
