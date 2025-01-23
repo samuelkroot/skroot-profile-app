@@ -21,7 +21,7 @@ function App() {
       email: 'jjpublic@purdue.edu'
     }
   ];
-  const [count, setCount] = useState(0);
+  let [count, setCount] = useState(0);
   const handleClick = () => {
     setCount(count++);
   };
