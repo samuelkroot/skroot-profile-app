@@ -1,4 +1,5 @@
 import img from '../assets/react.svg';
+import '../styles/card.css';
 
 const Card0 = () => {
     const name = 'Joe Public';
