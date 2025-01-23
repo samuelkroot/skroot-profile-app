@@ -1,4 +1,5 @@
 import './App.css'
+import {useState} from 'react';
 import Navbar from './components/Navbar';
 import Wrapper from './components/Wrapper';
 import About from "./components/About";
@@ -20,6 +21,10 @@ function App() {
       email: 'jjpublic@purdue.edu'
     }
   ];
+  const [count, setCount] = useState(0);
+  const handleClick = () => {
+    setCount(count++);
+  };
   return (
     <>
       <header>
@@ -28,6 +33,7 @@ function App() {
       <main>
         <Wrapper>
           <h1>Profile App</h1>
+          <button onClick={handleClick}>{count}</button>
         </Wrapper>
         <Wrapper>
           <About />
