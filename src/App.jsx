@@ -1,37 +1,45 @@
 import './App.css'
-import About from "./components/About";
-import Card0 from './components/Card0';
-import Card1 from './components/Card1';
 import Navbar from './components/Navbar';
+import Wrapper from './components/Wrapper';
+import About from "./components/About";
+import Card from './components/Card';
+import image from './assets/react.svg';
 
 function App() {
+  const profiles = [
+    {
+      img: image,
+      name: 'Joe Public',
+      title: 'Web Developer',
+      email: 'jpublic@purdue.edu'
+    },
+    {
+      img: image,
+      name: 'Jane Public',
+      title: 'Software Developer',
+      email: 'jjpublic@purdue.edu'
+    }
+  ];
   return (
     <>
       <header>
         <Navbar />
       </header>
       <main>
-        <div className="section">
-          <div className="container">
-            <h1>Profile App</h1>
+        <Wrapper>
+          <h1>Profile App</h1>
+        </Wrapper>
+        <Wrapper>
+          <About />
+        </Wrapper>
+        <Wrapper>
+          <div className="profile-cards">
+            {profiles.map(profile => <Card key={profile.email} {...profile} />)}
           </div>
-        </div>
-        <div className="section">
-          <div className="container">
-            <About />
-          </div>
-        </div>
-        <div className="section">
-          <div className="container">
-            <div className="profile-cards">
-              <Card0 />
-              <Card1 />
-            </div>
-          </div>
-        </div>
+        </Wrapper>
       </main>
     </>
-  )
+  );
 }
 
 export default App
