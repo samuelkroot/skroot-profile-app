@@ -1,7 +1,9 @@
 .profile-card {
-    background-color: lightgrey;
-    padding: 20px;
+    float: left;
+    background-color: none;
+    padding: 10px;
     border-radius: 10px;
+    border: 5px solid rebeccapurple;
     width: 150px;
     height: 200px;
 }

@@ -7,6 +7,7 @@ import Card from './components/Card';
 import image from './assets/react.svg';
 
 function App() {
+
   const profiles = [
     {
       img: image,
@@ -21,10 +22,36 @@ function App() {
       email: 'jjpublic@purdue.edu'
     }
   ];
-  let [count, setCount] = useState(0);
-  const handleClick = () => {
-    setCount(count++);
-  };
+  
+    const [count, setCount] = useState(0);
+    const handleClick = () => {
+      setCount(count => count + 1);
+    };
+
+  const titles = [...new Set(profiles.map((profile) => profile.title))];
+
+  const [title, setTitle] = useState('');
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+    console.log(event.target.value);
+  }
+  
+  const [search, setSearch] = useState('');
+  const handleSearch = (event) => {
+    setSearch(event.target.value);
+  }
+  
+  const filteredProfiles = profiles.filter((profile) => {
+    return (title === '' || profile.title === title) && profile.name.toLowerCase().includes(search.toLowerCase());
+  });
+
+  const [reset, setReset] = useState('');
+  const handleReset = () => {
+    setTitle('');
+    setSearch('');
+    setReset('');
+  }
+
   return (
     <>
       <header>
@@ -39,8 +66,24 @@ function App() {
           <About />
         </Wrapper>
         <Wrapper>
+          <div className='filter-wrapper'>
+            <div className='filter--select'>
+              <label htmlFor='title-select'>Filter by title: </label>
+              <select id='title-select' onChange={handleTitleChange} value={title}>
+                <option value=''>All</option>
+                {titles.map((title) => (<option key={title} value={title}>{title}</option>))}
+              </select>
+            </div>
+            <div className='filter--search'>
+              <label htmlFor='search'>Filter by name: </label>
+              <input type='text' id='search' onChange={handleSearch} value={search} />
+            </div>
+            <div className='filter--reset'>
+              <button onClick={handleReset}>Clear</button>
+            </div>
+          </div>
           <div className="profile-cards">
-            {profiles.map(profile => <Card key={profile.email} {...profile} />)}
+            {filteredProfiles.map((profile) => <Card key={profile.email} {...profile} />)}
           </div>
         </Wrapper>
       </main>
