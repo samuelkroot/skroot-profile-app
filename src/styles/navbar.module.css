@@ -1,6 +1,9 @@
+.navbar {
+    width: 100%;
+}
 ul {
     overflow: hidden;
-    background-color: rebeccapurple;
+    background-color: black;
 }
 li {
     float: left;
@@ -12,6 +15,7 @@ li a {
     padding: 14px 16px;
     text-decoration: none;
 }
-a:focus {
-    background-color: purple;
+li a:hover {
+    color: white;
+    background-color: rebeccapurple;
 }

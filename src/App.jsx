@@ -33,29 +33,39 @@ function App() {
   const [title, setTitle] = useState('');
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
-    console.log(event.target.value);
+    setAnimation(true);
   }
   
   const [search, setSearch] = useState('');
   const handleSearch = (event) => {
     setSearch(event.target.value);
+    setAnimation(true);
   }
   
   const filteredProfiles = profiles.filter((profile) => {
     return (title === '' || profile.title === title) && profile.name.toLowerCase().includes(search.toLowerCase());
   });
 
-  const [reset, setReset] = useState('');
   const handleReset = () => {
     setTitle('');
     setSearch('');
-    setReset('');
+    setAnimation(true);
+  }
+
+  const [animation, setAnimation] = useState(false);
+  const handleAnimation = () => {
+    setAnimation(false);
+  }
+
+  const [mode, setMode] = useState(false);
+  const handleMode = () => {
+    setMode(!mode);
   }
 
   return (
     <>
       <header>
-        <Navbar />
+        <Navbar mode={mode} handleMode={handleMode} />
       </header>
       <main>
         <Wrapper>
@@ -83,7 +93,7 @@ function App() {
             </div>
           </div>
           <div className="profile-cards">
-            {filteredProfiles.map((profile) => <Card key={profile.email} {...profile} />)}
+            {filteredProfiles.map((profile) => <Card key={profile.email} {...profile} animate={animation} handleAnimate={handleAnimation} />)}
           </div>
         </Wrapper>
       </main>

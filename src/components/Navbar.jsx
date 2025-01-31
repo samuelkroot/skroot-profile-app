@@ -1,8 +1,8 @@
-import '../styles/navbar.css';
+import styles from '../styles/navbar.module.css';
 
-const Navbar = () => {
+const Navbar = ({mode, handleMode}) => {
     return (
-        <nav className="navbar">
+        <nav className={`${styles['navbar']}`}>
             <ul>
                 <li>
                     <a href="#">Home</a>
@@ -12,6 +12,9 @@ const Navbar = () => {
                 </li>
                 <li>
                     <a href="#">Profiles</a>
+                </li>
+                <li>
+                    <button onClick={handleMode}>{mode}</button>
                 </li>
             </ul>
         </nav>
