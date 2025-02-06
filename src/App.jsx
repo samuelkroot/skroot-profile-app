@@ -3,6 +3,7 @@ import {useState} from 'react';
 import Navbar from './components/Navbar';
 import Wrapper from './components/Wrapper';
 import About from "./components/About";
+import ProfileForm from './components/ProfileForm';
 import Card from './components/Card';
 import image from './assets/react.svg';
 
@@ -25,7 +26,7 @@ function App() {
   
     const [count, setCount] = useState(0);
     const handleClick = () => {
-      setCount(count => count + 1);
+      setCount(prevCount => prevCount + 1);
     };
 
   const titles = [...new Set(profiles.map((profile) => profile.title))];
@@ -74,6 +75,9 @@ function App() {
         </Wrapper>
         <Wrapper>
           <About />
+        </Wrapper>
+        <Wrapper>
+          <ProfileForm />
         </Wrapper>
         <Wrapper>
           <div className='filter-wrapper'>
