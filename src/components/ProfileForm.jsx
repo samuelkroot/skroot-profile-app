@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from '../styles/profileform.module.css';
 
 const ProfileForm = () => {
     const [data, setData] = useState({ name: "", email: "", title: "", bio: "", image: null });
@@ -26,12 +27,12 @@ const ProfileForm = () => {
         formData.append("email", data.email.trim());
         formData.append("title", data.title.trim());
         formData.append("bio", data.bio.trim());
-        if (data.image) formData.append("image", data.image.trim());
+        if (data.image) formData.append("image", data.image);
 
         console.log(formData);
         try {
             const response = await fetch('https://web.ics.purdue.edu/~skroot/cgt-390/public/send-data.php', { 
-                method: POST, 
+                method: 'POST', 
                 body: formData 
             });
             const result = await response.json();
@@ -57,7 +58,7 @@ const ProfileForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="profile-form">
+        <form onSubmit={handleSubmit} className={styles["profile-form"]}>
             <input 
                 type="text" 
                 name="name" 
@@ -90,16 +91,18 @@ const ProfileForm = () => {
                 onChange={handleChange}
             ></textarea>
             <p>{data.bio.length}/200</p>
+
             <label htmlFor="image">Upload a profile image:</label>
             <input 
                 type="file" 
                 name="image" 
                 id="image" 
-                accept="image/jpg, image/jpeg, image/png, image/webp, image/gif" 
+                accept="image/jpg, image/jpeg, image/png, image/gif" 
                 required="required" 
                 onChange={handleChange} 
             />
             {errors.image && <p>{errors.image}</p>}
+            
             <button type="submit" disabled={submitting || errors.image !== "" || data.name === "" || data.email === "" || data.title === "" || data.bio === "" || data.image === null ? true : false }>Submit</button>
             {errors.general && <p>{errors.general}</p>}
             {successMsg && <p>{successMsg}</p>}

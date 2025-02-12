@@ -1,5 +1,5 @@
 import './App.css'
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Navbar from './components/Navbar';
 import Wrapper from './components/Wrapper';
 import About from "./components/About";
@@ -9,20 +9,29 @@ import image from './assets/react.svg';
 
 function App() {
 
-  const profiles = [
-    {
-      img: image,
-      name: 'Joe Public',
-      title: 'Web Developer',
-      email: 'jpublic@purdue.edu'
-    },
-    {
-      img: image,
-      name: 'Jane Public',
-      title: 'Software Developer',
-      email: 'jjpublic@purdue.edu'
-    }
-  ];
+  // const profiles = [
+  //   {
+  //     img: image,
+  //     name: 'Joe Public',
+  //     title: 'Web Developer',
+  //     email: 'jpublic@purdue.edu'
+  //   },
+  //   {
+  //     img: image,
+  //     name: 'Jane Public',
+  //     title: 'Software Developer',
+  //     email: 'jjpublic@purdue.edu'
+  //   }
+  // ];
+  const [profiles, setProfiles] = useState([]);
+  useEffect(() => {
+    fetch('https://web.ics.purdue.edu/~skroot/cgt-390/public/fetch-data.php')
+      .then((res) => res.json())
+      .then((data) => {
+        setProfiles(data);
+        console.log(data);
+      });
+  }, []);
   
     const [count, setCount] = useState(0);
     const handleClick = () => {
@@ -97,7 +106,7 @@ function App() {
             </div>
           </div>
           <div className="profile-cards">
-            {filteredProfiles.map((profile) => <Card key={profile.email} {...profile} animate={animation} handleAnimate={handleAnimation} />)}
+            {filteredProfiles.map((profile) => <Card key={profile.id} {...profile} animate={animation} handleAnimate={handleAnimation} />)}
           </div>
         </Wrapper>
       </main>
