@@ -25,9 +25,14 @@
 }
 
 .profile-card__image {
-    max-width: 100%;
-    border-radius: 50%;
+    width: 100%;
     padding: 5px;
+    align-content: center;
+}
+
+.profile-card__image img {
+    width: 80px;
+    border-radius: 50%;
 }
 
 .profile-card__content {
