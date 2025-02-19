@@ -17,11 +17,7 @@
     border: 5px solid rebeccapurple;
     width: 150px;
     height: 200px;
-    &.is-entering {
-        opacity: 0;
-        transform: scale(0.9);
-        animation: fade-in 1.2s;
-    }
+    animation: fade-in 1.2s;
 }
 
 .profile-card__image {
