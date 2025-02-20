@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Wrapper from '../components/Wrapper';
 import Navbar from '../components/Navbar';
 import Card from '../components/Card';
@@ -33,6 +34,7 @@ const HomePage = () => {
         setProfiles(data.profiles);
         setprofCount(data.count);
         setPage(data.page);
+        console.log(data);
       });
   }, [title, search, page]);
 
@@ -45,46 +47,48 @@ const HomePage = () => {
 
   return (
     <>
-      <main>
-        <Wrapper>
-          <h1>Profile App</h1>
+      <Wrapper>
+        <h1>Profile App</h1>
 
-          <div className='filter-wrapper'>
-            <div className='filter--select'>
-              <label htmlFor='title-select'>Filter by title: </label>
-              <select id='title-select' onChange={handleTitleChange} value={title}>
-                <option value=''>All</option>
-                {titles.map((title) => (<option key={title} value={title}>{title}</option>))}
-              </select>
-            </div>
-            <div className='filter--search'>
-              <label htmlFor='search'>Filter by name: </label>
-              <input type='text' id='search' onChange={handleSearch} value={search} />
-            </div>
-            <div className='filter--reset'>
-              <button onClick={handleReset}>Clear</button>
-            </div>
+        <div className='filter-wrapper'>
+          <div className='filter--select'>
+            <label htmlFor='title-select'>Filter by title: </label>
+            <select id='title-select' onChange={handleTitleChange} value={title}>
+              <option value=''>All</option>
+              {titles.map((title) => (<option key={title} value={title}>{title}</option>))}
+            </select>
           </div>
+          <div className='filter--search'>
+            <label htmlFor='search'>Filter by name: </label>
+            <input type='text' id='search' onChange={handleSearch} value={search} />
+          </div>
+          <div className='filter--reset'>
+            <button onClick={handleReset}>Clear</button>
+          </div>
+        </div>
 
-          <div className="profile-cards">
-            {profiles.map((profile) => <Card key={profile.id} {...profile} />)}
+        <div className="profile-cards">
+          {profiles.map((profile) => (
+            <Link to={`/profile/${profile.id}`} key={profile.id}>
+              <Card {...profile} />
+            </Link>
+          ))}
+        </div>
+        {
+          profCount === 0 &&
+          <p>No profiles found</p>
+        }
+        {
+          profCount > 10 &&
+          <div className='pagination'>
+            <button onClick={() => setPage(page - 1)} disabled={page === 1}>Prev</button>
+            <span>
+              {page}/{pageCount}
+            </span>
+            <button onClick={() => setPage(page - 1)} disabled={page >= pageCount}>Next</button>
           </div>
-          {
-            profCount === 0 && 
-            <p>No profiles found</p>
-          }
-          {
-            profCount > 10 &&
-            <div className='pagination'>
-              <button onClick={() => setPage(page - 1)} disabled={page === 1}>Prev</button>
-              <span>
-                {page}/{pageCount}
-              </span>
-              <button onClick={() => setPage(page - 1)} disabled={page >= pageCount}>Next</button>
-            </div>
-          }
-        </Wrapper>
-      </main>
+        }
+      </Wrapper>
     </>
   );
 }
