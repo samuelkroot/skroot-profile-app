@@ -92,7 +92,7 @@ const ProfileForm = () => {
             ></textarea>
             <p>{data.bio.length}/200</p>
 
-            <label htmlFor="image">Upload a profile image:</label>
+            <label htmlFor="image">Upload a profile image: </label>
             <input 
                 type="file" 
                 name="image" 

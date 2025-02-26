@@ -1,6 +1,7 @@
 import './App.css';
-import { useState } from 'react';
+import { useContext } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
+import ModeContext from './contexts/ModeContext';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -11,17 +12,14 @@ import ProfileEditPage from './pages/ProfileEditPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
-  const [mode, setMode] = useState(false);
-  const handleMode = () => {
-    setMode();
-  }
+  const { mode } = useContext(ModeContext);
 
   return (
     <HashRouter>
       <header>
-        <Navbar mode={mode} handleMode={handleMode} />
+        <Navbar />
       </header>
-      <main>
+      <main className={mode}>
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/about' element={<AboutPage />} />

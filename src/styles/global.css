@@ -3,6 +3,9 @@
     margin: 0rem;
     padding: 0rem;
 }
+main {
+    text-align: center;
+}
 .section {
     padding: 3rem 1rem;
 }

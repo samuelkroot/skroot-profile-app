@@ -5,17 +5,20 @@ ul {
     overflow: hidden;
     background-color: black;
 }
-li {
+ul li {
     float: left;
 }
-li Link {
+ul button {
+    float: right;
+}
+li a {
     display: block;
     color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
-li Link:hover {
+li a:hover {
     color: white;
     background-color: rebeccapurple;
 }
