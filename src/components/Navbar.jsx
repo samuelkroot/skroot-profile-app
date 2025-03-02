@@ -1,10 +1,17 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from '../styles/navbar.module.css';
 import ModeContext from '../contexts/ModeContext';
+import AuthContext from '../contexts/AuthContext';
 
 const Navbar = () => {
+    const navigate = useNavigate();
     const { mode, toggleMode } = useContext(ModeContext);
+    const { isLogin, logout } = useContext(AuthContext);
+
+    const handleLoginRedirect = () => {
+        navigate('/login');
+    }
 
     return (
         <nav className={`${styles['navbar']}`}>
@@ -19,10 +26,15 @@ const Navbar = () => {
                     <Link to='/add-profile'>Add Profile</Link>
                 </li>
                 <button onClick={toggleMode}>
-                    {mode === 'dark' ? "Dark Mode" : "Light Mode"}
+                    {mode === 'dark' ? 'Dark Mode' : 'Light Mode'}
                 </button>
+                {isLogin ? (
+                    <button onClick={logout()}>Logout</button>
+                ) : (
+                    <Link to='/login'>Login/Register</Link>
+                )}
             </ul>
         </nav>
     );
-}
+};
 export default Navbar;
