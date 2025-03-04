@@ -1,5 +1,5 @@
 import styles from '../styles/profileform.module.css';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../contexts/AuthContext';
 
@@ -7,6 +7,11 @@ const AuthForm = ({ isRegisterPage = false }) => {
     const navigate = useNavigate();
 
     const { login } = useContext(AuthContext);
+
+    const usernameRef = useRef(null);
+    useLayoutEffect(() => {
+        usernameRef.current.focus();
+    }, []);
 
     const [data, setData] = useState({ username: '', password: '', email: '' });
     const [submitting, setSubmitting] = useState(false);
@@ -74,6 +79,7 @@ const AuthForm = ({ isRegisterPage = false }) => {
             )}
             {isRegisterPage && <hr />}
             <input
+                ref={usernameRef}
                 type='text'
                 name='username'
                 placeholder='Username'
