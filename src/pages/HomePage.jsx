@@ -1,11 +1,10 @@
-import { useEffect, useReducer } from 'react';
 import { Link } from 'react-router-dom';
+import useHomepageAPI from '../hooks/homepageAPI';
 import Wrapper from '../components/Wrapper';
 import Card from '../components/Card';
-import { homeReducer, initialState } from '../reducers/HomeReducer';
 
 const HomePage = () => {
-    const [state, dispatch] = useReducer(homeReducer, initialState);
+    const { state, dispatch } = useHomepageAPI();
     const { titles, title, search, profiles, page, profCount } = state;
 
     const handleTitleChange = (event) => {
@@ -21,34 +20,6 @@ const HomePage = () => {
     };
 
     let pageCount = Math.ceil(profCount / 10);
-
-    useEffect(() => {
-        fetch(
-            `https://web.ics.purdue.edu/~skroot/cgt-390/public/fetch-data-with-filter.php?title=${title}&name=${search}&page=${page}&limit=10`
-        )
-            .then((res) => res.json())
-            .then((data) => {
-                dispatch({
-                    type: 'FETCH_DATA',
-                    payload: {
-                        profiles: data.profiles,
-                        count: data.count,
-                        page: data.page,
-                    },
-                });
-                console.log(data);
-            });
-    }, [title, search, page]);
-
-    useEffect(() => {
-        fetch(
-            'https://web.ics.purdue.edu/~skroot/cgt-390/public/fetch-titles.php'
-        )
-            .then((res) => res.json())
-            .then((data) =>
-                dispatch({ type: 'SET_TITLES', payload: data.titles })
-            );
-    }, []);
 
     return (
         <Wrapper>

@@ -1,6 +1,8 @@
-import { createContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
+
 const ModeContext = createContext();
 export default ModeContext;
+
 export const ModeProvider = ({children}) => {
     const [mode, setMode] = useState('dark');
     const toggleMode = () => {
@@ -12,3 +14,5 @@ export const ModeProvider = ({children}) => {
         </ModeContext.Provider>
     );
 }
+
+export const useMode = () => useContext(ModeContext);

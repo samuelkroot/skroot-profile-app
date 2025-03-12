@@ -1,12 +1,12 @@
 import styles from '../styles/profileform.module.css';
-import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from '../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 
 const AuthForm = ({ isRegisterPage = false }) => {
     const navigate = useNavigate();
 
-    const { login } = useContext(AuthContext);
+    const { login } = useAuth();
 
     const usernameRef = useRef(null);
     useLayoutEffect(() => {
@@ -96,6 +96,9 @@ const AuthForm = ({ isRegisterPage = false }) => {
                 value={data.password}
                 onChange={handleChange}
             ></input>
+            {error &&
+                <p>{error}</p>
+            }
             <button
                 type='submit'
                 disabled={
@@ -107,6 +110,9 @@ const AuthForm = ({ isRegisterPage = false }) => {
             >
                 Submit
             </button>
+            {successMsg && 
+                <p>{successMsg}</p>
+            }
         </form>
     );
 };

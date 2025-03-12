@@ -1,13 +1,12 @@
-import { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import styles from '../styles/navbar.module.css';
-import ModeContext from '../contexts/ModeContext';
-import AuthContext from '../contexts/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { useMode } from '../contexts/ModeContext';
+import { useAuth } from '../contexts/AuthContext';
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const { mode, toggleMode } = useContext(ModeContext);
-    const { isLogin, logout } = useContext(AuthContext);
+    const { mode, toggleMode } = useMode();
+    const { isLogin, logout } = useAuth();
 
     const handleLoginRedirect = () => {
         navigate('/login');
