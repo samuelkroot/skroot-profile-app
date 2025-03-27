@@ -1,23 +1,30 @@
+import { useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import useHomepageAPI from '../hooks/homepageAPI';
 import Wrapper from '../components/Wrapper';
+import Filters from '../components/Filters';
 import Card from '../components/Card';
+import Pagination from '../components/Pagination';
 
 const HomePage = () => {
     const { state, dispatch } = useHomepageAPI();
     const { titles, title, search, profiles, page, profCount } = state;
+    
+    const titlesVal = useMemo(() => titles, [titles]);
+    
+    const dispatchCallback = useCallback(() => {dispatch}, [dispatch]);
 
-    const handleTitleChange = (event) => {
+    const handleTitleChange = useCallback((event) => {
         dispatch({ type: 'SET_TITLE', payload: event.target.value });
-    };
+    }, []);
 
-    const handleSearch = (event) => {
+    const handleSearch = useCallback((event) => {
         dispatch({ type: 'SET_SEARCH', payload: event.target.value });
-    };
+    }, []);
 
-    const handleReset = () => {
+    const handleReset = useCallback(() => {
         dispatch({ type: 'CLEAR_FILTER' });
-    };
+    }, []);
 
     let pageCount = Math.ceil(profCount / 10);
 
@@ -25,38 +32,14 @@ const HomePage = () => {
         <Wrapper>
             <h1>Profile App</h1>
 
-            <div className='filter-wrapper'>
-                <div className='filter--select'>
-                    <label htmlFor='title-select'>Filter by title: </label>
-                    <select
-                        id='title-select'
-                        onChange={handleTitleChange}
-                        value={title}
-                    >
-                        <option value=''>All</option>
-                        {titles.map((title) => (
-                            <option
-                                key={title}
-                                value={title}
-                            >
-                                {title}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div className='filter--search'>
-                    <label htmlFor='search'>Filter by name: </label>
-                    <input
-                        type='text'
-                        id='search'
-                        onChange={handleSearch}
-                        value={search}
-                    />
-                </div>
-                <div className='filter--reset'>
-                    <button onClick={handleReset}>Clear</button>
-                </div>
-            </div>
+            <Filters
+                titles={titlesVal}
+                title={title}
+                search={search}
+                handleTitleChange={handleTitleChange}
+                handleSearch={handleSearch}
+                handleReset={handleReset}
+            />
 
             <div className='profile-cards'>
                 {profiles.map((profile) => (
@@ -70,27 +53,9 @@ const HomePage = () => {
             </div>
             {profCount === 0 && <p>No profiles found</p>}
             {profCount > 10 && (
-                <div className='pagination'>
-                    <button
-                        onClick={() =>
-                            dispatch({ type: 'SET_PAGE', payload: page - 1 })
-                        }
-                        disabled={page === 1}
-                    >
-                        Prev
-                    </button>
-                    <span>
-                        {page}/{pageCount}
-                    </span>
-                    <button
-                        onClick={() =>
-                            dispatch({ type: 'SET_PAGE', payload: page - 1 })
-                        }
-                        disabled={page >= pageCount}
-                    >
-                        Next
-                    </button>
-                </div>
+                <Pagination
+                    dispatch={dispatchCallback}
+                />
             )}
         </Wrapper>
     );

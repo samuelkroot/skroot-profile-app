@@ -1,14 +1,15 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 
 const AuthContext = createContext();
 export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
     const [isLogin, setIsLogin] = useState(false);
-    const login = () => {
+
+    const login = useCallback(() => {
         setIsLogin(true);
-    };
-    const logout = () => {
+    }, []);
+    const logout = useCallback(() => {
         fetch('https://web.ics.purdue.edu/~skroot/cgt-390/public/logout.php')
             .then((response) => response.json())
             .then((data) => {
@@ -19,9 +20,10 @@ export const AuthProvider = ({ children }) => {
                 }
             })
             .catch((error) => console.log(error));
-    };
+    }, []);
+    const value = useMemo(() => ({ isLogin, login, logout }), [isLogin, login, logout]);
     return (
-        <AuthContext.Provider value={{ isLogin, login, logout }}>
+        <AuthContext.Provider value={{ value }}>
             {children}
         </AuthContext.Provider>
     );

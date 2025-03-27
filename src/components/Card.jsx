@@ -1,7 +1,8 @@
+import { memo } from 'react';
 import styles from '../styles/card.module.css';
 import PropTypes from 'prop-types';
 
-const Card = ({image_url, name, title, email}) => {
+const Card = memo(({image_url, name, title, email}) => {
     return (
         <div className={`${styles["profile-card"]}`}>
             <div className={styles["profile-card__image"]}>
@@ -14,7 +15,7 @@ const Card = ({image_url, name, title, email}) => {
             </div>
         </div>
     );
-}
+});
 Card.propTypes = {
     image_url: PropTypes.string,
     name: PropTypes.string,

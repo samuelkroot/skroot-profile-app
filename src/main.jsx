@@ -5,9 +5,9 @@ import { ModeProvider } from './contexts/ModeContext.jsx';
 import App from './App.jsx';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <ModeProvider>
-      <App />
-    </ModeProvider>
-  </StrictMode>,
-)
+    <StrictMode>
+        <ModeProvider>
+            <App />
+        </ModeProvider>
+    </StrictMode>
+);
