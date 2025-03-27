@@ -1,12 +1,19 @@
 import styles from '../styles/navbar.module.css';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { useMode } from '../contexts/ModeContext';
 import { useAuth } from '../contexts/AuthContext';
+import { toggle } from '../redux/slices/modeSlice';
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const { mode, toggleMode } = useMode();
     const { isLogin, logout } = useAuth();
+    
+    const mode = useSelector((state) => state.mode.mode);
+    const dispatch = useDispatch();
+
+    const toggleMode = () => {
+        dispatch(toggle());
+    }
 
     const handleLoginRedirect = () => {
         navigate('/login');
