@@ -4,7 +4,6 @@ import useHomepageAPI from '../hooks/homepageAPI';
 import Wrapper from '../components/Wrapper';
 import Filters from '../components/Filters';
 import Card from '../components/Card';
-import Pagination from '../components/Pagination';
 
 const HomePage = () => {
     const { state, dispatch } = useHomepageAPI();
@@ -12,8 +11,6 @@ const HomePage = () => {
     
     const titlesVal = useMemo(() => titles, [titles]);
     
-    const dispatchCallback = useCallback(() => {dispatch}, [dispatch]);
-
     const handleTitleChange = useCallback((event) => {
         dispatch({ type: 'SET_TITLE', payload: event.target.value });
     }, []);
@@ -53,9 +50,27 @@ const HomePage = () => {
             </div>
             {profCount === 0 && <p>No profiles found</p>}
             {profCount > 10 && (
-                <Pagination
-                    dispatch={dispatchCallback}
-                />
+                <div className='pagination'>
+                <button
+                    onClick={() =>
+                        dispatch({ type: 'SET_PAGE', payload: page - 1 })
+                    }
+                    disabled={page === 1}
+                >
+                    Prev
+                </button>
+                <span>
+                    {page}/{pageCount}
+                </span>
+                <button
+                    onClick={() =>
+                        dispatch({ type: 'SET_PAGE', payload: page + 1 })
+                    }
+                    disabled={page >= pageCount}
+                >
+                    Next
+                </button>
+            </div>
             )}
         </Wrapper>
     );
