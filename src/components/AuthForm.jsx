@@ -1,12 +1,12 @@
 import styles from '../styles/profileform.module.css';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/slices/authSlice';
 
 const AuthForm = ({ isRegisterPage = false }) => {
     const navigate = useNavigate();
-
-    const { login } = useAuth();
+    const dispatch = useDispatch();
 
     const usernameRef = useRef(null);
     useLayoutEffect(() => {
@@ -42,7 +42,7 @@ const AuthForm = ({ isRegisterPage = false }) => {
             );
             const data = await response.json();
             if (data.success) {
-                login();
+                dispatch(login());
                 setData({ username: '', password: '', email: '' });
                 setSuccessMsg(data.success);
                 setError('');

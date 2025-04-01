@@ -2,7 +2,6 @@ import './App.css';
 import { lazy, Suspense } from 'react';
 import { useSelector } from 'react-redux';
 import { HashRouter, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
@@ -20,66 +19,64 @@ function App() {
     const LazyDetailPage = lazy(() => import('./pages/ProfileDetailPage'));
 
     return (
-        <AuthProvider>
-            <HashRouter>
-                <header>
-                    <Navbar />
-                </header>
-                <main className={mode}>
-                    <Routes>
+        <HashRouter>
+            <header>
+                <Navbar />
+            </header>
+            <main className={mode}>
+                <Routes>
+                    <Route
+                        path='/'
+                        element={<HomePage />}
+                    />
+                    <Route
+                        path='/about'
+                        element={<AboutPage />}
+                    />
+                    <Route
+                        path='/login'
+                        element={<LoginPage />}
+                    />
+                    <Route
+                        path='/register'
+                        element={<RegisterPage />}
+                    />
+                    <Route
+                        path='/add-profile'
+                        element={
+                            <ProtectedRoute>
+                                <AddProfilePage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path='profile/:id'
+                        element={<ProfileLayoutPage />}
+                    >
                         <Route
-                            path='/'
-                            element={<HomePage />}
-                        />
-                        <Route
-                            path='/about'
-                            element={<AboutPage />}
-                        />
-                        <Route
-                            path='/login'
-                            element={<LoginPage />}
-                        />
-                        <Route
-                            path='/register'
-                            element={<RegisterPage />}
-                        />
-                        <Route
-                            path='/add-profile'
+                            index
                             element={
-                                <ProtectedRoute>
-                                    <AddProfilePage />
-                                </ProtectedRoute>
+                                <Suspense fallback={<div>Loading...</div>}>
+                                    <LazyDetailPage />
+                                </Suspense>
                             }
                         />
                         <Route
-                            path='profile/:id'
-                            element={<ProfileLayoutPage />}
-                        >
-                            <Route
-                                index
-                                element={
-                                    <Suspense fallback={<div>Loading...</div>}>
-                                        <LazyDetailPage />
-                                    </Suspense>
-                                }
-                            />
-                            <Route
-                                path='edit'
-                                element={
-                                    <ProtectedRoute>
-                                        <ProfileEditPage />
-                                    </ProtectedRoute>
-                                }
-                            />
-                        </Route>
-                        <Route
-                            path='*'
-                            element={<NotFoundPage />}
+                            path='edit'
+                            element={
+                                <ProtectedRoute>
+                                    <ProfileEditPage />
+                                </ProtectedRoute>
+                            }
                         />
-                    </Routes>
-                </main>
-            </HashRouter>
-        </AuthProvider>
+                    </Route>
+                    <Route
+                        path='*'
+                        element={<NotFoundPage />}
+                    />
+                </Routes>
+            </main>
+        </HashRouter>
     );
 }
 
